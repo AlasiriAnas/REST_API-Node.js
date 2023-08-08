@@ -1,9 +1,12 @@
 import express from 'express';
-import { getAllUsers } from '../controllers/users';
+import { deleteUser, getAllUsers, updateUser } from '../controllers/users';
+import { isAuthenticated, isOwner } from '../middelwares';
 
 
 export default(router: express.Router) => {
-    router.get('/users', getAllUsers);
+    router.get('/users', isAuthenticated, getAllUsers);
+    router.delete('/users/:id' , isAuthenticated ,isOwner ,deleteUser);
+    router.patch('/users/:id', isAuthenticated, isOwner, updateUser);
 };
 
 
